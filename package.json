@@ -8,7 +8,7 @@
   "scripts": {
     "cloc": "node cloc",
     "coverage": "codecov",
-    "test": "jest test/unit",
+    "test": "jest test",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepare": "echo npm run build",
     "release": "cloc && standard-version && git push --follow-tags && npm publish"

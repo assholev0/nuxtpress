@@ -1,0 +1,8 @@
+node_modules/
+demo/
+coverage/
+
+*.log
+*.log.*
+.DS_Store
+sw.*

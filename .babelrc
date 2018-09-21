@@ -1,0 +1,15 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "current"
+      }
+    }]
+  ],
+  "env": {
+    "test": {
+      "sourceMaps": "both"
+    }
+  },
+  "comments": false
+}

@@ -1,0 +1,54 @@
+{
+  "name": "nuxtpress",
+  "version": "0.0.0-asshole-v0-token",
+  "description": "NuxtPress is a professional blog module for nuxt.js",
+  "module": "./src/index.js",
+  "jsnext:main": "./src/index.js",
+  "main": "./dist/index.js",
+  "scripts": {
+    "coverage": "codecov",
+    "test": "jest test/unit",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "prepare": "echo npm run build",
+    "release": "standard-version && git push --follow-tags && npm publish"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "gray-matter": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^9.0.0",
+    "babel-jest": "^23.6.0",
+    "codecov": "^3.1.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.6.0",
+    "eslint-config-dwing": "^1.2.1",
+    "eslint-plugin-jest": "^21.22.0",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.12.1",
+    "standard-version": "^4.4.0"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": -10
+      }
+    }
+  },
+  "keywords": [
+    "nuxtpress",
+    "nuxt",
+    "vuepress"
+  ],
+  "repository": "git@github.com:assholev0/nuxtpress.git",
+  "author": "willin <willin@willin.org>",
+  "license": "MIT"
+}

@@ -6,11 +6,12 @@
   "jsnext:main": "./src/index.js",
   "main": "./dist/index.js",
   "scripts": {
+    "cloc": "node cloc",
     "coverage": "codecov",
     "test": "jest test/unit",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "prepare": "echo npm run build",
-    "release": "standard-version && git push --follow-tags && npm publish"
+    "release": "cloc && standard-version && git push --follow-tags && npm publish"
   },
   "peerDependencies": {},
   "dependencies": {
@@ -24,6 +25,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.6.0",
+    "cloc": "^2.3.4",
     "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.6.0",

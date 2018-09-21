@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
-
 import gm from 'gray-matter';
+import { readFileSync } from 'fs';
+import { getFileLastUpdated } from '../lib/utils';
 
 export default function page(meta, options, isDev) {
   const cached = {};

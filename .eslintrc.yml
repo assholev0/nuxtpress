@@ -5,3 +5,8 @@ plugins:
   - jest
 env:
   jest/globals: true
+rules:
+  max-len:
+    - 1
+    - code: 200
+      tabWidth: 2

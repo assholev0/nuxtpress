@@ -2,7 +2,7 @@ import { join } from 'path';
 import { spawnSync } from 'child_process';
 import { defaultSourceOpts } from './defaults';
 
-export const getFileLastUpdated = file => parseInt(spawnSync('git', ['log', '-1', '--format=%ct', file]).stdout.toString('utf-8'), 10) * 1000;
+export const getFileLastUpdated = file => parseInt(spawnSync('git', ['log', '-1', '--format=%ct', file]).stdout.toString('utf-8'), 10) * 1000 || false;
 
 export const nuxtpressConfig = (rootDir) => {
   try {

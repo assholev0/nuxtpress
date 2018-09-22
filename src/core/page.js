@@ -5,22 +5,21 @@ import { getFileLastUpdated } from '../lib/utils';
 export default function Page(meta, options, isDev) {
   const cached = {};
   return {
-    get _raw() {
+    get raw() {
       if (isDev || !cached.data) {
         const source = readFileSync(meta.filePath).toString();
         if (meta.fileName.search(/\.md$/) > -1) {
           const page = gm(source);
+          const edited = getFileLastUpdated(meta.filePath);
           cached.data = Object.assign(page, {
-            data: Object.assign({}, page.data, {
-              edited: getFileLastUpdated(meta.filePath)
-            })
+            data: Object.assign({}, page.data, edited ? { edited: new Date(edited) } : {})
           });
         }
       }
       return cached.data;
     },
     get atrributes() {
-      return this._raw.data;
+      return this.raw.data;
     }
   };
 }

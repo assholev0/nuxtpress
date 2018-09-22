@@ -1,9 +1,10 @@
 import { join } from 'path';
 import { getFileLastUpdated, nuxtpressConfig, mergeSourceOpts } from '../../src/lib/utils';
 
-describe('utils', () => {
+describe('lib/utils', () => {
   test('getFileLastUpdated', () => {
     expect(getFileLastUpdated(join(__dirname, '../../package.json'))).toBeGreaterThan(1e10);
+    expect(getFileLastUpdated(join(__dirname, '../package.json'))).toBe(false);
   });
 
   test('nuxtpressConfig', () => {

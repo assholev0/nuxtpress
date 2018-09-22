@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`core/page getPage 1`] = `
+Object {
+  "atrributes": Object {
+    "category": "技术",
+    "date": 2018-09-16T11:47:42.000Z,
+    "edited": 2018-09-22T02:18:13.000Z,
+    "tags": Array [
+      "vue",
+      "vuepress",
+      "前端",
+    ],
+    "title": "开篇：你好，世界！",
+  },
+  "raw": Object {
+    "content": "
+这是一篇测试文章。
+",
+    "data": Object {
+      "category": "技术",
+      "date": 2018-09-16T11:47:42.000Z,
+      "edited": 2018-09-22T02:18:13.000Z,
+      "tags": Array [
+        "vue",
+        "vuepress",
+        "前端",
+      ],
+      "title": "开篇：你好，世界！",
+    },
+    "excerpt": "",
+    "isEmpty": false,
+  },
+}
+`;

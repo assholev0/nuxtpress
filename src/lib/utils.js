@@ -27,3 +27,5 @@ export const mergeSourceOpts = (source) => {
   }
   return opts;
 };
+
+export const getBaseURL = (opts, api = {}, isStatic = false) => (typeof api === 'function' ? api(isStatic) : api) || `http${opts.server.https ? 's' : ''}://${opts.server.host || 'localhost'}:${opts.server.port || '3000'}`;

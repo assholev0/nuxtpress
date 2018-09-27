@@ -1,8 +1,22 @@
-export default ({ app, isStatic, hotReload, route }) => {
-  // check context request
-  if (hotReload || route.fullPath.includes('__webpack_hmr?') || route.fullPath.includes('.hot-update.')) {
-    return;
-  }
-  const isAPI = process.server || !isStatic;
+import { join } from 'path';
 
+export default ({ hotReload, route, app }, inject) => {
+  // none biz of context
+  if (hotReload || route.fullPath.includes('__webpack_hmr?') || route.fullPath.includes('.hot-update.')) { return; }
+
+  const cache = {};
+
+  const fetchContent = async (path, endpoint) => {
+    const key = join(path, endpoint).replace(/(?!^\/)(\/)/g, '.');
+    if (!cache[key]) {
+      cache[key] = (await app.$axios.get(`${key}.json`)).data;
+    }
+    return cache(key);
+  };
+
+  const handler = () => (source = '') => ({
+    posts: () => fetchContent(`/${source}`, 'posts')
+  });
+  // short for nuxtpress
+  inject('np', handler);
 };

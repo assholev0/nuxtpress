@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/assholev0/nuxtpress.svg?branch=master)](https://travis-ci.org/assholev0/nuxtpress) [![codebeat](https://codebeat.co/badges/d1051fe1-48b6-4a3f-8902-c98773d459e3)](https://codebeat.co/projects/github-com-assholev0-nuxtpress-master) [![codecov](https://codecov.io/gh/assholev0/nuxtpress/branch/master/graph/badge.svg)](https://codecov.io/gh/assholev0/nuxtpress) ![code-size](https://img.shields.io/github/languages/code-size/assholev0/nuxtpress.svg)
 
 
-是时候表演一波真正的技术了。代码行数： 仅 **<!-- cloc -->22<!-- cloc -->** 行。
+是时候表演一波真正的技术了。代码行数： 仅 **<!-- cloc -->149<!-- cloc -->** 行。
 
 ## 配置
 

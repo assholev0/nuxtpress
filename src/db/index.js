@@ -16,11 +16,9 @@ export default async (sourceDir) => {
       markdown = `--- \n${markdown}`;
     }
     const { content = '', data, excerpt = '' } = parseFrontmatter(markdown);
-    // eslint-disable-next-line object-curly-newline
     const { title, date, slug = file.replace(/^\d{2,4}-?\d{1,2}-?\d{1,2}-?([\w-]+).md$/, '$1'), ...meta } = objectKeysToLower(data);
     const tags = meta.tags || meta.tag;
     const category = meta.category || meta.categories;
-    // eslint-disable-next-line no-bitwise
     assert.ok(!~slug.indexOf('.md'), `${file} needs a slug!`);
     return {
       content: md.render(content),

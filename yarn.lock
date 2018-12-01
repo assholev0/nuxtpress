@@ -2913,9 +2913,9 @@ eslint-config-airbnb-base@*:
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-eslint-config-dwing@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-dwing/-/eslint-config-dwing-1.2.1.tgz#395f07b2572652ae604e3b68c10e613f294a09d6"
+eslint-config-dwing@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-dwing/-/eslint-config-dwing-1.2.2.tgz#1aaa50eb7d51a590ce061326ccccd98655040651"
   dependencies:
     eslint "*"
     eslint-config-airbnb-base "*"

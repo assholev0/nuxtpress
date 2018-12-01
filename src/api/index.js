@@ -1,9 +1,14 @@
-const db = require('../db');
+import db from '../db';
 
-export default async (options) => {
-  const { src = '_source' } = options.nuxtpress;
-  const { posts, tags, categories, wordcount } = await db(src);
-  return (req, res) => {
-    console.log(req);
+export default (options) => {
+  const { src = '_source' } = options.nuxtpress || { };
+  return async (req, res) => {
+    const { posts, tags, categories, wordcount } = await db(src);
+    const url = req.originalUrl;
+
+    res.end(JSON.stringify({
+      posts,
+      tags
+    }), 'utf-8');
   };
 };

@@ -14,8 +14,8 @@ export default ({ hotReload, route, app }, inject) => {
     return cache(key);
   };
 
-  const handler = () => (source = '') => ({
-    posts: () => fetchContent(`/${source}`, 'posts')
+  const handler = (source = '') => new Proxy({}, {
+    get: (target, property) => opts => fetchContent(`/${source}`, property.toLowerCase(), opts)
   });
   // short for nuxtpress
   inject('np', handler);

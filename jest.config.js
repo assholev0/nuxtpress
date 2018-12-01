@@ -5,7 +5,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**'
   ],
-  testPathIgnorePatterns: ['test/fixtures/.*/.*?/'],
+  testPathIgnorePatterns: ['test/fixtures/.*/.*?/', 'demo/'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleFileExtensions: ['js', 'mjs', 'json'],
   expand: true

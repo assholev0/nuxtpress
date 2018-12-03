@@ -1,14 +1,24 @@
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import pkg from '../package.json';
 import api from './api';
 
+const nuxtpressConfig = (rootDir) => {
+  try {
+    const rootConfig = join(rootDir, 'nuxtpress.config.js');
+    // eslint-disable-next-line global-require,import/no-dynamic-require
+    return require(rootConfig);
+  } catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') { return false; }
+    throw new Error(`[Invalid NuxtPress configuration] ${err}`);
+  }
+};
+
 export default function () {
-  // console.log(this.options);
+  const { head, nuxtpress = nuxtpressConfig(this.options.rootDir) } = this.options;
   this.addServerMiddleware({
     path: '/api',
-    handler: api(this.options)
+    handler: api({ head, nuxtpress })
   });
-  // server: { port: '9200', host: undefined, https: false },
   const { port, host = '127.0.0.1', https } = this.options.server;
   this.requireModule(['@nuxtjs/axios', {
     baseURL: `http${https ? 's' : ''}://${host}:${port}`

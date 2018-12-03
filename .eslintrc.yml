@@ -1,12 +1,7 @@
 root: true
 extends: dwing
 parser: babel-eslint
-plugins:
-  - jest
-env:
-  jest/globals: true
 rules:
-  object-curly-newline: 0
   max-len:
     - 1
     - code: 200

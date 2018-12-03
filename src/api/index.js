@@ -27,14 +27,16 @@ export default ({
   const { content: description = '' } = meta.find(x => x.name === 'description') || {};
   const json = d => res.end(JSON.stringify(d), 'utf-8');
   const [, type = '', search = ''] = url.split('/');
+
   switch (type) {
     case 'info': {
       json({
         title,
         description,
         posts: posts.length,
-        tags: categories.length,
-        wordcount: wordcount.length
+        tags: tags.length,
+        categories: categories.length,
+        wordcount
       });
       break;
     }
@@ -44,7 +46,7 @@ export default ({
         posts: posts.map((origin) => {
           const { content, ...post } = origin;
           return post;
-        }).filter(post => post.tags.includes(search))
+        }).filter(post => post.tags.includes(decodeURI(search)))
       });
       break;
     }
@@ -54,7 +56,7 @@ export default ({
         posts: posts.map((origin) => {
           const { content, ...post } = origin;
           return post;
-        }).filter(post => post.category.includes(search))
+        }).filter(post => post.category.includes(decodeURI(search)))
       });
       break;
     }
@@ -78,12 +80,12 @@ export default ({
       json({
         page,
         pages,
-        posts: posts.splice((page - 1) * size, size)
+        posts: tmpPosts.splice((page - 1) * size, size)
       });
       break;
     }
     case 'post': {
-      const post = posts.find(x => x.slug === search) || {};
+      const post = posts.find(x => x.slug === decodeURI(search)) || {};
       json({
         post
       });

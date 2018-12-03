@@ -7,8 +7,9 @@
   "main": "./src/index.js",
   "scripts": {
     "cloc": "node cloc",
+    "toc": "doctoc README.md",
     "lint": "eslint src --ext .js,.vue --fix --quiet",
-    "release": "cloc && standard-version && git push --follow-tags && npm publish"
+    "release": "cloc && npm run toc && standard-version && git push --follow-tags && npm publish"
   },
   "peerDependencies": {},
   "dependencies": {
@@ -25,6 +26,7 @@
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "cloc": "^2.3.4",
+    "doctoc": "^1.4.0",
     "eslint": "^5.6.0",
     "eslint-config-dwing": "^1.2.2",
     "standard-version": "^4.4.0"

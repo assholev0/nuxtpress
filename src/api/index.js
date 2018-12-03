@@ -1,14 +1,98 @@
 import db from '../db';
 
-export default (options) => {
-  const { src = '_source' } = options.nuxtpress || { };
-  return async (req, res) => {
-    const { posts, tags, categories, wordcount } = await db(src);
-    const url = req.originalUrl;
+const cache = {};
+const getCache = () => {
+  const timestamp = new Date();
+  if (cache.expires && cache.expires > timestamp) {
+    return cache.data;
+  }
+  return false;
+};
 
-    res.end(JSON.stringify({
-      posts,
-      tags
-    }), 'utf-8');
+const setCache = (data) => {
+  Object.assign(cache, {
+    data,
+    expires: new Date() + 1e4
+  });
+  return data;
+};
+
+export default (options) => {
+  const { src = '_source', per_page: perPage = 10 } = options.nuxtpress || { };
+  return async (req, res) => {
+    const { posts, tags, categories, wordcount } = getCache() || await db(src).then(setCache);
+    const { url } = req;
+    const { title, meta = [] } = options.head;
+    const { content: description = '' } = meta.find(x => x.name === 'description') || {};
+    const json = d => res.end(JSON.stringify(d), 'utf-8');
+    const [, type = '', search = ''] = url.split('/');
+    switch (type) {
+      case 'info': {
+        json({
+          title,
+          description,
+          posts: posts.length,
+          tags: categories.length,
+          wordcount: wordcount.length
+        });
+        break;
+      }
+      case 'tags': {
+        json({
+          tags,
+          posts: posts.map((origin) => {
+            const { content, ...post } = origin;
+            return post;
+          }).filter(post => post.tags.includes(search))
+        });
+        break;
+      }
+      case 'categories': {
+        json({
+          categories,
+          posts: posts.map((origin) => {
+            const { content, ...post } = origin;
+            return post;
+          }).filter(post => post.category.includes(search))
+        });
+        break;
+      }
+      case 'archives': {
+        json({
+          posts: posts.map((origin) => {
+            const { content, excrept, ...post } = origin;
+            return post;
+          })
+        });
+        break;
+      }
+      case 'posts': {
+        const tmpPosts = posts.map((origin) => {
+          const { content, ...post } = origin;
+          return post;
+        });
+        const page = +search || 1;
+        const size = perPage === 0 ? tmpPosts.length : perPage;
+        const pages = Math.ceil(tmpPosts.length / size);
+        json({
+          page,
+          pages,
+          posts: posts.splice((page - 1) * size, size)
+        });
+        break;
+      }
+      case 'post': {
+        const post = posts.find(x => x.slug === search) || {};
+        json({
+          post
+        });
+        break;
+      }
+      default: {
+        res.statusCode = 404;
+        res.statusMessage = 'Not Found';
+        res.end();
+      }
+    }
   };
 };

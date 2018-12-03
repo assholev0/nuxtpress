@@ -1,6 +1,6 @@
 {
   "name": "nuxtpress",
-  "version": "0.0.0-asshole-v0-token",
+  "version": "0.0.0-asshole-v0-token1",
   "description": "NuxtPress is a professional blog module for nuxt.js",
   "module": "./src/index.js",
   "jsnext:main": "./src/index.js",

@@ -4,17 +4,16 @@ export default ({ hotReload, route, app }, inject) => {
 
   const cache = {};
 
-  const fetchContent = async (endpoint) => {
+  const fetchContent = async (endpoint, search) => {
     const key = endpoint.replace(/(?!^\/)(\/)/g, '.');
-    console.log(key);
     if (!cache[key]) {
-      cache[key] = (await app.$axios.get('http://localhost:9200/api').catch(e => console.error(e))).data;
+      cache[key] = (await app.$axios.get(`/api/${key}${search ? `/${search}` : ''}`)).data;
     }
     return cache[key];
   };
 
   const handler = new Proxy({}, {
-    get: (target, property) => opts => fetchContent(property.toLowerCase(), opts)
+    get: (target, property) => search => fetchContent(property.toLowerCase(), search)
   });
   // short for nuxtpress
   inject('np', handler);

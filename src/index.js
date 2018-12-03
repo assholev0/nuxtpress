@@ -8,7 +8,6 @@ export default function () {
     path: '/api',
     handler: api(this.options)
   });
-  // console.log(this.options);
   // server: { port: '9200', host: undefined, https: false },
   const { port, host = '127.0.0.1', https } = this.options.server;
   this.requireModule(['@nuxtjs/axios', {

@@ -1,4 +1,4 @@
-export default ({ hotReload, route, app }, inject) => {
+export default ({ hotReload, route, app, isStatic }, inject) => {
   // none biz of context
   if (hotReload || route.fullPath.includes('__webpack_hmr?') || route.fullPath.includes('.hot-update.')) { return; }
 
@@ -6,6 +6,9 @@ export default ({ hotReload, route, app }, inject) => {
 
   const fetchContent = async (endpoint, search) => {
     const key = endpoint.replace(/(?!^\/)(\/)/g, '.');
+    if (isStatic) {
+      return {};
+    }
     if (!cache[key]) {
       cache[key] = (await app.$axios.get(`/api/${key}${search ? `/${search}` : ''}`)).data;
     }

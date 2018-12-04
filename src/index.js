@@ -1,6 +1,8 @@
+import express from 'express';
 import { resolve, join } from 'path';
 import pkg from '../package.json';
 import api from './api';
+import db from './db';
 
 const nuxtpressConfig = (rootDir) => {
   try {
@@ -25,6 +27,34 @@ export default function () {
   }]);
   // Inject `$np` plugin
   this.addPlugin(resolve(__dirname, 'plugins/np.js'));
+
+  this.nuxt.hook('generate:extendRoutes', async (routes) => {
+    const { src = '_source', per_page: perPage = 10 } = nuxtpress;
+    const { posts, tags, categories } = await db(src);
+    const pages = Math.ceil(posts.length / perPage);
+    [
+      ...new Array(pages - 1).fill(pages).map((x, i) => `/page/${x - i}`),
+      ...tags.map(tag => `/tags/${tag.name}`),
+      ...categories.map(category => `/categories/${category.name}`),
+      ...posts.map(post => `/p/${post.slug}`),
+      '/arhives', '/tags', '/categories'
+    ].forEach((route) => {
+      routes.push({ route, payload: null });
+    });
+  });
+
+  this.nuxt.hook('generate:before', () => {
+    const app = express();
+    app.use(
+      '/api',
+      api({ head, nuxtpress })
+    );
+    const server = app.listen(port, host);
+
+    this.nuxt.hook('generate:done', () => {
+      server.close();
+    });
+  });
 }
 
 export { pkg as meta };

@@ -6,7 +6,7 @@ import { wordcount, parseFrontmatter, objectKeysToLower } from './common';
 import md from './markdown';
 
 export default async (sourceDir) => {
-  const postFiles = await globby(['**/*.md'], { cwd: sourceDir }).then(arr => arr.sort((x, y) => (x > y ? 1 : -1)));
+  const postFiles = await globby(['**/*.md'], { cwd: sourceDir }).then(arr => arr.sort((x, y) => (x < y ? 1 : -1)));
 
   return Promise.all(postFiles.map(async (file) => {
     const filepath = path.resolve(sourceDir, file);

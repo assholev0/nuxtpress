@@ -1,6 +1,6 @@
 {
   "name": "nuxtpress",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "NuxtPress is a professional blog module for nuxt.js",
   "module": "./src/index.js",
   "jsnext:main": "./src/index.js",
@@ -9,7 +9,7 @@
     "cloc": "node cloc",
     "toc": "doctoc README.md",
     "lint": "eslint src --ext .js,.vue --fix --quiet",
-    "release": "cloc && npm run toc && standard-version && git push --follow-tags && npm publish"
+    "release": "npm run cloc && npm run toc && standard-version && git push --follow-tags && npm publish"
   },
   "peerDependencies": {},
   "dependencies": {

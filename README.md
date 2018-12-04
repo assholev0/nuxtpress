@@ -9,6 +9,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [示例](#%E7%A4%BA%E4%BE%8B)
 - [配置](#%E9%85%8D%E7%BD%AE)
 - [API](#api)
   - [`$np` 方法](#np-%E6%96%B9%E6%B3%95)
@@ -23,6 +24,10 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## 示例
+
+地址： <https://v0.chat>
+源码： <https://github.com/assholev0/v0.chat>
 
 ## 配置
 
@@ -262,7 +267,7 @@ app.$np.archives()
 - [ ] add Page Render
 - [x] add API Server Middleware
 - [x] add Request Plugin
-- [ ] add Build Hook
+- [x] add Build Hook
 
 ## License
 

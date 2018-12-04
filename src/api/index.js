@@ -85,7 +85,8 @@ export default ({
       break;
     }
     case 'post': {
-      const post = posts.find(x => x.slug === decodeURI(search)) || {};
+      const origin = posts.find(x => x.slug === decodeURI(search)) || {};
+      const { excrept, ...post } = origin;
       json({
         post
       });

@@ -17,14 +17,9 @@ const nuxtpressConfig = (rootDir) => {
 
 export default function () {
   const { head, nuxtpress = nuxtpressConfig(this.options.rootDir) } = this.options;
-  this.addServerMiddleware({
-    path: '/api',
-    handler: api({ head, nuxtpress })
-  });
+  this.addServerMiddleware({ path: '/api', handler: api({ head, nuxtpress }) });
   const { port, host = '127.0.0.1', https } = this.options.server;
-  this.requireModule(['@nuxtjs/axios', {
-    baseURL: `http${https ? 's' : ''}://${host}:${port}`
-  }]);
+  this.requireModule(['@nuxtjs/axios', { baseURL: `http${https ? 's' : ''}://${host}:${port}` }]);
   // Inject `$np` plugin
   this.addPlugin(resolve(__dirname, 'plugins/np.js'));
 
@@ -32,8 +27,7 @@ export default function () {
     const { src = '_source', per_page: perPage = 10 } = nuxtpress;
     const { posts, tags, categories } = await db(src);
     const pages = Math.ceil(posts.length / perPage);
-    [
-      ...new Array(pages - 1).fill(pages).map((x, i) => `/page/${x - i}`),
+    [...new Array(pages - 1).fill(pages).map((x, i) => `/page/${x - i}`),
       ...tags.map(tag => `/tags/${tag.name}`),
       ...categories.map(category => `/categories/${category.name}`),
       ...posts.map(post => `/p/${post.slug}`)
@@ -44,10 +38,7 @@ export default function () {
 
   this.nuxt.hook('generate:before', () => {
     const app = express();
-    app.use(
-      '/api',
-      api({ head, nuxtpress })
-    );
+    app.use('/api', api({ head, nuxtpress }));
     const server = app.listen(port, host);
 
     this.nuxt.hook('generate:done', () => {

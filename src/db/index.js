@@ -12,9 +12,7 @@ export default async (sourceDir) => {
     const filepath = path.resolve(sourceDir, file);
     let markdown = fs.readFileSync(filepath, 'utf-8');
     // 修复部分配置不规范
-    if (!markdown.startsWith('---')) {
-      markdown = `--- \n${markdown}`;
-    }
+    if (!markdown.startsWith('---')) { markdown = `--- \n${markdown}`; }
     const { content = '', data, excerpt = '' } = parseFrontmatter(markdown);
     const { title, date, slug = file.replace(/^\d{2,4}-?\d{1,2}-?\d{1,2}-?([\w-]+).md$/, '$1'), ...meta } = objectKeysToLower(data);
     const tags = meta.tags || meta.tag;

@@ -14,8 +14,6 @@ export const parseFrontmatter = content => matter(content, {
 });
 
 export const objectKeysToLower = origin => Object.keys(origin).reduce((obj, key) => {
-  Object.assign(obj, {
-    [key.toLocaleLowerCase()]: origin[key]
-  });
+  Object.assign(obj, { [key.toLocaleLowerCase()]: origin[key] });
   return obj;
 }, {});

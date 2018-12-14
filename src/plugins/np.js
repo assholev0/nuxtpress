@@ -1,15 +1,27 @@
-export default ({ hotReload, route, app }, inject) => {
+export default ({ hotReload, route, app, isStatic }, inject) => {
   // none biz of context
   if (hotReload || route.fullPath.includes('__webpack_hmr?') || route.fullPath.includes('.hot-update.')) { return; }
 
   const cache = {};
+  const isAPI = process.server || !isStatic;
 
   const fetchContent = async (endpoint, search = '') => {
-    const key = endpoint.replace(/(?!^\/)(\/)/g, '.');
-    if (!cache[key]) {
-      cache[key] = (await app.$axios.get(`/api/${key}${search ? `/${search}` : ''}`)).data;
+    if (isAPI) {
+      const key = endpoint.replace(/(?!^\/)(\/)/g, '.');
+      if (!isStatic || !cache[key]) {
+        cache[key] = (await app.$axios.get(`/api/${key}${search ? `/${search}` : ''}`)).data;
+      }
+      return cache[key];
     }
-    return cache[key];
+    if (process.client) {
+      app.$axios.defaults.baseURL = '/';
+      const key = endpoint.replace(/(?!^\/)(\/)/g, '.');
+      if (!cache[key]) {
+        cache[key] = (await app.$axios.get(`/_nuxt/api/${key}${search ? `_${search}` : ''}.json`)).data;
+      }
+      return cache[key];
+    }
+    return {};
   };
 
   const handler = new Proxy({}, {

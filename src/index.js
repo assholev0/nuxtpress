@@ -16,12 +16,16 @@ const nuxtpressConfig = (rootDir) => {
 };
 
 export default function () {
-  const { head, nuxtpress = nuxtpressConfig(this.options.rootDir) } = this.options;
-  this.addServerMiddleware({ path: '/api', handler: api({ head, nuxtpress }) });
+  const { head, generate, nuxtpress = nuxtpressConfig(this.options.rootDir) } = this.options;
+  this.addServerMiddleware({ path: '/api', handler: api({ head, nuxtpress, generate }) });
   const { port, host = '127.0.0.1', https } = this.options.server;
-  this.requireModule(['@nuxtjs/axios', { baseURL: `http${https ? 's' : ''}://${host}:${port}` }]);
   // Inject `$np` plugin
   this.addPlugin(resolve(__dirname, 'plugins/np.js'));
+
+  this.nuxt.hook('build:before', (builder) => {
+    // eslint-disable-next-line no-mixed-operators
+    this.requireModule(['@nuxtjs/axios', { baseURL: `http${https ? 's' : ''}://${host}:${port}`, browserBaseURL: builder.isStatic && nuxtpress.browserBaseURL || '' }]);
+  });
 
   this.nuxt.hook('generate:extendRoutes', async (routes) => {
     const { src = '_source', per_page: perPage = 10 } = nuxtpress;
@@ -38,7 +42,7 @@ export default function () {
 
   this.nuxt.hook('generate:before', () => {
     const app = express();
-    app.use('/api', api({ head, nuxtpress }));
+    app.use('/api', api({ head, nuxtpress, generate }));
     const server = app.listen(port, host);
 
     this.nuxt.hook('generate:done', () => {

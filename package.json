@@ -1,6 +1,6 @@
 {
   "name": "nuxtpress",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "NuxtPress is a professional blog module for nuxt.js",
   "module": "./src/index.js",
   "jsnext:main": "./src/index.js",

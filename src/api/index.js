@@ -1,3 +1,4 @@
+import fs from 'fs';
 import db from '../db';
 
 const cache = {};
@@ -19,13 +20,21 @@ const setCache = (data) => {
 
 export default ({
   head: { title = '', meta = [] } = {},
+  generate: { dir = '' } = {},
   nuxtpress: { src = '_source', per_page: perPage = 10 } = {}
 } = {}) => async (req, res) => {
   const { posts, tags, categories, wordcount } = getCache() || await db(src).then(setCache);
   const { url } = req;
 
   const { content: description = '' } = meta.find(x => x.name === 'description') || {};
-  const json = d => res.end(JSON.stringify(d), 'utf-8');
+  const json = (d) => {
+    if (!fs.existsSync(`${dir}/_nuxt/api`)) {
+      fs.mkdirSync(`${dir}/_nuxt/api`);
+    }
+    const path = url.replace(/^\//, '').replace(/\//g, '_');
+    fs.writeFileSync(`${dir}/_nuxt/api/${path}.json`, JSON.stringify(d), 'utf-8');
+    res.end(JSON.stringify(d), 'utf-8');
+  };
   const [, type = '', search = ''] = url.split('/');
 
   switch (type) {

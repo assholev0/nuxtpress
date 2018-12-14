@@ -14,6 +14,7 @@ export default ({ hotReload, route, app, isStatic }, inject) => {
       return cache[key];
     }
     if (process.client) {
+      // eslint-disable-next-line no-param-reassign
       app.$axios.defaults.baseURL = '/';
       const key = endpoint.replace(/(?!^\/)(\/)/g, '.');
       if (!cache[key]) {

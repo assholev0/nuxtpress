@@ -1,5 +1,5 @@
 root: true
-extends: dwing
+extends: willin
 parser: babel-eslint
 rules:
   max-len:

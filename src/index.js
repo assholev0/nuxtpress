@@ -32,9 +32,9 @@ export default function () {
     const { posts, tags, categories } = await db(src);
     const pages = Math.ceil(posts.length / perPage);
     [...new Array(pages - 1).fill(pages).map((x, i) => `/page/${x - i}`),
-      ...tags.map(tag => `/tags/${tag.name}`),
-      ...categories.map(category => `/categories/${category.name}`),
-      ...posts.map(post => `/p/${post.slug}`)
+      ...tags.map((tag) => `/tags/${tag.name}`),
+      ...categories.map((category) => `/categories/${category.name}`),
+      ...posts.map((post) => `/p/${post.slug}`)
     ].forEach((route) => {
       routes.push({ route, payload: null });
     });

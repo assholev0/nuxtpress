@@ -6,7 +6,7 @@ import { wordcount, parseFrontmatter, objectKeysToLower } from './common';
 import md from './markdown';
 
 export default async (sourceDir) => {
-  const postFiles = await globby(['**/*.md'], { cwd: sourceDir }).then(arr => arr.sort((x, y) => (x < y ? 1 : -1)));
+  const postFiles = await globby(['**/*.md'], { cwd: sourceDir }).then((arr) => arr.sort((x, y) => (x < y ? 1 : -1)));
 
   return Promise.all(postFiles.map(async (file) => {
     const filepath = path.resolve(sourceDir, file);
@@ -28,11 +28,11 @@ export default async (sourceDir) => {
       date,
       slug
     };
-  })).then(posts => ({
+  })).then((posts) => ({
     posts,
     ...posts.reduce((total, post) => {
       post.tags.forEach((tag) => {
-        const i = total.tags.findIndex(x => x.name === tag);
+        const i = total.tags.findIndex((x) => x.name === tag);
         if (i === -1) {
           total.tags.push({ name: tag, count: 1 });
         } else {
@@ -42,7 +42,7 @@ export default async (sourceDir) => {
         }
       });
       post.category.forEach((cat) => {
-        const i = total.categories.findIndex(x => x.name === cat);
+        const i = total.categories.findIndex((x) => x.name === cat);
         if (i === -1) {
           total.categories.push({ name: cat, count: 1 });
         } else {

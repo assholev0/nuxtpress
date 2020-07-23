@@ -9,11 +9,11 @@ export const wordcount = (str) => {
   return cn + en;
 };
 
-export const parseFrontmatter = content => matter(content, {
+export const parseFrontmatter = (content) => matter(content, {
   excerpt_separator: '<!-- more -->'
 });
 
-export const objectKeysToLower = origin => Object.keys(origin).reduce((obj, key) => {
+export const objectKeysToLower = (origin) => Object.keys(origin).reduce((obj, key) => {
   Object.assign(obj, { [key.toLocaleLowerCase()]: origin[key] });
   return obj;
 }, {});
